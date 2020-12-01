@@ -11,14 +11,13 @@ import com.serrodcal.poc.application.query.GetBalanceQuery;
 import com.serrodcal.poc.domain.repository.AccountRepository;
 import io.smallrye.mutiny.Uni;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
+import javax.inject.Singleton;
 import java.util.Date;
 import java.util.UUID;
 
-@ApplicationScoped
+@Singleton
 public class AccountService {
 
     @Inject
@@ -37,14 +36,19 @@ public class AccountService {
     }
 
     public Uni<AccountInformationDTO> findAccount(FindAccountQuery query) {
-        return Uni.createFrom().item(new AccountInformationDTO(
-                query.getUuid(),
-                "ES1212341234121234567890",
-                0,
-                1492.89,
-                "EUR",
-                new Date(630370800000l)
-        ));
+        try {
+            UUID.fromString(query.getUuid());
+            return Uni.createFrom().item(new AccountInformationDTO(
+                    query.getUuid(),
+                    "ES1212341234121234567890",
+                    0,
+                    1492.89,
+                    "EUR",
+                    new Date(630370800000l)
+            ));
+        } catch (IllegalArgumentException e) {
+            return Uni.createFrom().failure(e);
+        }
     }
 
     public Uni<TransactionAccountResultDTO> makeTransaction(MakeTransactionAccountCommand command) {

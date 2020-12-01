@@ -5,11 +5,11 @@ import com.serrodcal.poc.application.dto.TransactionResultDTO;
 import com.serrodcal.poc.domain.repository.TransactionRepository;
 import io.smallrye.mutiny.Uni;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
-@ApplicationScoped
+@Singleton
 public class TransactionsService {
 
     @Inject

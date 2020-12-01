@@ -18,10 +18,12 @@ import io.vertx.core.json.Json;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import org.jboss.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-@ApplicationScoped
+@Singleton
 @RouteBase(path = "api/v1")
 public class AccountResource {
 
@@ -31,7 +33,7 @@ public class AccountResource {
     AccountService accountService;
 
     @Route(path = "account", methods = HttpMethod.POST)
-    void createAccount(RoutingContext rc, @Body CreateAccountRequestPayload payload) {
+    void createAccount(RoutingContext rc, @Body @Valid CreateAccountRequestPayload payload) {
         log.debug("AccountResource.createAccount(): " + payload.toString());
         CreateAccountRequestPayloadToCreateAccountCommandConverter converterIn =
                 new CreateAccountRequestPayloadToCreateAccountCommandConverter();
@@ -54,7 +56,7 @@ public class AccountResource {
     }
 
     @Route(path = "account/:uuid", methods = HttpMethod.GET)
-    void findAccount(RoutingContext rc, @Param String uuid) {
+    void findAccount(RoutingContext rc, @NotNull @Param("uuid") String uuid) {
         log.debug("AccountResource.findAccount(): " + uuid);
         this.accountService.findAccount(new FindAccountQuery(uuid)).subscribe().with(
                 result -> {
@@ -75,7 +77,7 @@ public class AccountResource {
     }
 
     @Route(path = "account/:uuid/balance", methods = HttpMethod.GET)
-    void getBalanceByUUID(RoutingContext rc, @Param String uuid) {
+    void getBalanceByUUID(RoutingContext rc, @NotNull @Param("uuid") String uuid) {
         rc.response().end(uuid);
     }
 
