@@ -1,0 +1,4 @@
+- curl localhost:8080/api/v1/account/e04b38bb-2c4f-4118-b051-b0f487621cb4 -w "\n"
+- curl localhost:8080/api/v1/account/e04b38bb-2c4f-4118-b051-b0f487621cb4/balance -w "\n"
+- curl -X POST localhost:8080/api/v1/account -H 'Content-Type: application/json' -d '{"accountType":0, "holder":"12345678Z", "holderBirthDate":630370800000}' -w "\n"
+- curl -X POST localhost:8080/api/v1/account/transaction -H 'Content-Type: application/json' -d '{"account":"asdasd", "description":"example of transaction", "amount":12.32, "date":1606736599826}' -w "\n"
