@@ -1,11 +1,11 @@
-package com.serrodcal.poc.application.dto;
+package com.serrodcal.poc.presentation.resource.payload.response;
 
-public class BalanceAccountDTO {
+public class AccountBalanceResponsePayload {
 
     private Double amount;
     private String currency;
 
-    public BalanceAccountDTO(Double amount, String currency) {
+    public AccountBalanceResponsePayload(Double amount, String currency) {
         this.amount = amount;
         this.currency = currency;
     }

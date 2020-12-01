@@ -1,8 +1,10 @@
 package com.serrodcal.poc.presentation.resource;
 
 import com.serrodcal.poc.application.query.FindAccountQuery;
+import com.serrodcal.poc.application.query.GetBalanceQuery;
 import com.serrodcal.poc.application.service.AccountService;
 import com.serrodcal.poc.presentation.resource.payload.convertert.AccountInformationDTOToAccountFoundResponsePayloadConverter;
+import com.serrodcal.poc.presentation.resource.payload.convertert.BalanceAccountDTOToAccountBalanceResponsePayloadConverter;
 import com.serrodcal.poc.presentation.resource.payload.convertert.CreateAccountRequestPayloadToCreateAccountCommandConverter;
 import com.serrodcal.poc.presentation.resource.payload.convertert.NewAccountDTOToNewAccountResponsePayloadConverter;
 import com.serrodcal.poc.presentation.resource.payload.request.CreateAccountRequestPayload;
@@ -78,7 +80,23 @@ public class AccountResource {
 
     @Route(path = "account/:uuid/balance", methods = HttpMethod.GET)
     void getBalanceByUUID(RoutingContext rc, @NotNull @Param("uuid") String uuid) {
-        rc.response().end(uuid);
+        log.debug("AccountResource.getBalanceByUUID(): " + uuid);
+        this.accountService.getBalanceByUUID(new GetBalanceQuery(uuid)).subscribe().with(
+                result -> {
+                    BalanceAccountDTOToAccountBalanceResponsePayloadConverter converterOut =
+                            new BalanceAccountDTOToAccountBalanceResponsePayloadConverter();
+                    rc.response()
+                      .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
+                      .end(Json.encode(converterOut.convert(result)));
+                }
+                , failure -> {
+                    log.error("AccountResource.getBalanceByUUID(): " + failure.getMessage());
+                    rc.response()
+                            .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.TEXT_PLAIN)
+                            .setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code())
+                            .end(failure.getMessage());
+                }
+        );
     }
 
 }

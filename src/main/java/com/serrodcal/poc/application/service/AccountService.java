@@ -31,10 +31,6 @@ public class AccountService {
         );
     }
 
-    public Uni<BalanceAccountDTO> getBalanceByUUID(GetBalanceQuery query) {
-        return null;
-    }
-
     public Uni<AccountInformationDTO> findAccount(FindAccountQuery query) {
         try {
             UUID.fromString(query.getUuid());
@@ -45,6 +41,18 @@ public class AccountService {
                     1492.89,
                     "EUR",
                     new Date(630370800000l)
+            ));
+        } catch (IllegalArgumentException e) {
+            return Uni.createFrom().failure(e);
+        }
+    }
+
+    public Uni<BalanceAccountDTO> getBalanceByUUID(GetBalanceQuery query) {
+        try {
+            UUID.fromString(query.getUuid());
+            return Uni.createFrom().item(new BalanceAccountDTO(
+                    1492.89,
+                    "EUR"
             ));
         } catch (IllegalArgumentException e) {
             return Uni.createFrom().failure(e);
