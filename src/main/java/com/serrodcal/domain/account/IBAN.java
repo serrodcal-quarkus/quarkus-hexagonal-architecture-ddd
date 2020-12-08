@@ -3,11 +3,13 @@ package com.serrodcal.domain.account;
 // International Bank Account Number
 public class IBAN {
 
-    private String countryCode;
-    private String checkNumber;
-    private String bankIdentifier;
-    private String sortCode;
-    private String accountNumber;
+    // Spain: ES12 1234 1234 12 1234567890
+
+    private String countryCode; // ES
+    private String checkNumber; // 12
+    private String bankIdentifier; // 1234 1234
+    private String sortCode; // 12
+    private String accountNumber; // 1234567890
 
     public IBAN() { }
 

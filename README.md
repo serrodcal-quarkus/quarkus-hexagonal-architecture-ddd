@@ -1,8 +1,23 @@
-# quarkus-hex-arch-ddd project
+# Quarkus' reactive application following hexagonal architecture, DDD and synchronous CQRS
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This is an example of reactive application following DDD and the Hexagonal Architecture, implementing also
+a synchronous CQRS. This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Prerequisites
+
+Start a PostgreSQL database using Docker:
+
+```
+$ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:10.5
+```
+
+Start a Redis Client using Docker:
+
+```
+$ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name redis_quarkus_test -p 6379:6379 redis:5.0.6 
+```
 
 ## Running the application in dev mode
 
