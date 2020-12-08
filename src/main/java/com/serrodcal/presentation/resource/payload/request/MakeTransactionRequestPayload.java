@@ -1,31 +1,30 @@
 package com.serrodcal.presentation.resource.payload.request;
 
-import com.serrodcal.presentation.resource.exception.TransactionDescriptionIsEmptyException;
 import com.serrodcal.shared.util.CurrencyUtil;
 
+import javax.validation.constraints.*;
 import java.util.Date;
-import java.util.Objects;
 
 public class MakeTransactionRequestPayload {
 
     // Could be an UUID or an IBAN, depending on the kind of transaction
+    @NotNull(message = "Account may not be null")
+    @NotBlank (message = "Account may not be blank")
     private String account;
+    @NotNull(message = "Description may not be null")
+    @NotBlank (message = "Description may not be blank")
     private String description;
     // Signed
+    @NotNull(message = "Amount may not be null")
     private Double amount;
     // ISO 4217; Euro by default
     private String currency;
+    @PastOrPresent(message = "Date may not be future")
     private Date date;
 
     public MakeTransactionRequestPayload() { }
 
     public MakeTransactionRequestPayload(String account, String description, Double amount, String currency, Long date) {
-        Objects.requireNonNull(account, "Account identifier is required to make a transaction");
-        Objects.requireNonNull(description, "Description is required to make a transaction");
-        if (description.isEmpty())
-            throw new TransactionDescriptionIsEmptyException("Description is required to make a transaction");
-        Objects.requireNonNull(account, "Amount is required to make a transaction");
-
         this.account = account;
         this.description = description;
         this.amount = amount;
