@@ -1,12 +1,12 @@
-package com.serrodcal.application.dto;
+package com.serrodcal.presentation.resource.payload.response;
 
-public class TransactionResultDTO {
+public class TransactionResultResponsePayload {
 
     private Boolean result;
     private Double balance;
     private String currency;
 
-    public TransactionResultDTO(Boolean result, Double balance, String currency) {
+    public TransactionResultResponsePayload(Boolean result, Double balance, String currency) {
         this.result = result;
         this.balance = balance;
         this.currency = currency;
